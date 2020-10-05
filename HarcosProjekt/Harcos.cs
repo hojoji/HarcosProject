@@ -90,6 +90,7 @@ namespace HarcosProjekt
         {
             get
             {
+
                 return this.eletero;
             }
             set
