@@ -33,7 +33,7 @@ namespace HarcosProjekt
             }
             else if (statuszSablon == 3)
             {
-                this.alapEletero = 18;
+                this.alapEletero = 8;
                 this.alapSebzes = 5;
             }
             this.eletero = this.MaxEletero();
@@ -171,7 +171,6 @@ namespace HarcosProjekt
                 }
             }
         }
-
         public void Gyogyul()
         {
             if (this.Eletero <= 0)
@@ -190,7 +189,7 @@ namespace HarcosProjekt
         public override string ToString()
         {
             return String.Format
-                ("{0} - LVL: {1} - EXP: {2}/{3} - HP: {4}/{5} - DMG: {6}",
+                ("{0,-8} - LVL: {1} - EXP: {2}/{3} - HP: {4}/{5} - DMG: {6}",
                 this.nev, this.szint, this.tapasztalat, this.SzintLepeshez(),
                 this.eletero, MaxEletero(), this.Sebzes());
         }

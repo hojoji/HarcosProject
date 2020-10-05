@@ -10,12 +10,15 @@ namespace HarcosProjekt
     class Program
     {
         public static List<Harcos> harcosLista = new List<Harcos>();
-        public static Harcos h = new Harcos("harcos1", 1);
-        public static Harcos h2 = new Harcos("harcos2", 2);
-        public static Harcos h3 = new Harcos("harcos3", 3);
+        public static Harcos h1 = new Harcos("Kristóf", 1);
+        public static Harcos h2 = new Harcos("Levi", 2);
+        public static Harcos h3 = new Harcos("Márk", 3);
+        static Random r = new Random();
+
+
         public static void listaFeltoltese()
         {
-            harcosLista.Add(h);
+            harcosLista.Add(h1);
             harcosLista.Add(h2);
             harcosLista.Add(h3);
 
@@ -23,7 +26,6 @@ namespace HarcosProjekt
 
             try
             {
-
                 while (!r.EndOfStream)
                 {
                     string[] sor = r.ReadLine().Split(';');
@@ -36,11 +38,10 @@ namespace HarcosProjekt
                 Console.WriteLine("A fájlt nem sikerült beolvasni");
             }
 
-
-            foreach (Harcos h in harcosLista)
-            {
-                Console.WriteLine(h);
-            }
+            //foreach (Harcos h in harcosLista)
+            //{
+            //    Console.WriteLine(h);
+            //}
 
         }
 
@@ -50,7 +51,80 @@ namespace HarcosProjekt
 
             listaFeltoltese();
 
+            //Karakter Létrehozása
+            Console.Write("Adja meg a harcosa nevét:\t");
+            string nev = Console.ReadLine();
+            Console.Write("Státuszsablon száma (1/2/3):\t");
+            int sablon = Convert.ToInt32(Console.ReadLine());
+            Harcos felhasznalo = new Harcos(nev, sablon);
 
+
+            string menu;
+            int korSzamlalo = 1;
+            do
+            {
+                //Saját karakter kiiratása
+                Console.WriteLine(korSzamlalo+". Kör");
+                Console.WriteLine("-> {0}\n", felhasznalo);
+                //Ellenfelek kiiratása
+                for (int i = 0; i < harcosLista.Count; i++)
+                {
+                    Console.WriteLine("{0}. {1}", i + 1, harcosLista[i]);
+                }
+
+                //menü
+
+                do
+                {
+                    Console.WriteLine("Válasszon a menüpontok közül:\n(h)-harcol\n(g)-gyógyul\n(k)-kilép ");
+                    menu = Console.ReadLine();
+                } while (menu != "h" && menu != "g" && menu != "k");
+
+                if (menu == "h")
+                {
+                    string index;
+                    int indexInt = 0;
+                    string hiba = "";
+                    do
+                    {
+                        Console.WriteLine(hiba + " Hányas sorszámú ellenféllel szeretne megküzdeni?");
+                        index = Console.ReadLine();
+
+                        if (index.All(char.IsNumber))
+                        {
+                            indexInt = Int32.Parse(index);
+                        }
+                        else
+                        {
+                            hiba = "Egy számot adjon meg!";
+                        }
+
+                    } while (indexInt < 1 || indexInt > harcosLista.Count);
+
+                    felhasznalo.Megkuzd(harcosLista[Convert.ToInt32(index) - 1]);
+                }
+                else if (menu == "g")
+                {
+                    felhasznalo.Gyogyul();
+                }
+
+
+                if (korSzamlalo % 3 == 0)
+                {
+                    int rnd = r.Next(0, harcosLista.Count);
+                    Console.WriteLine("A karaktered megtámadták!\n{0} <---> {1}\n Eredmény: ", felhasznalo, harcosLista[rnd]);
+                    harcosLista[rnd].Megkuzd(felhasznalo);
+                    Console.ReadLine();
+                    Console.WriteLine("{0}\n{1}\n [ENTER]: ", felhasznalo, harcosLista[rnd]);
+                    Console.ReadLine();
+                    foreach (Harcos h in harcosLista)
+                    {
+                        h.Gyogyul();
+                    }
+                }
+                korSzamlalo++;
+                Console.Clear();
+            } while (menu != "k");
 
             ////teszt
             //console.writeline(h);
@@ -77,7 +151,7 @@ namespace HarcosProjekt
 
 
 
-            Console.ReadLine();
+
 
         }
     }
