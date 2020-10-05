@@ -24,7 +24,7 @@ namespace HarcosProjekt
             if (statuszSablon == 1)
             {
                 this.alapEletero = 15;
-                this.alapSebzes = 10;
+                this.alapSebzes = 3;
             }
             else if (statuszSablon == 2)
             {
